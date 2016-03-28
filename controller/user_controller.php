@@ -1,8 +1,5 @@
 <?php
 
-require_once('../models/db_connection.php');
-require_once('../models/user.php');
-
 if (isset($_POST['login'])) {
 
     session_start();
