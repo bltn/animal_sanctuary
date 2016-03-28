@@ -12,6 +12,10 @@ if (isset($_POST['login'])) {
         $_SESSION['error_message'] .= "We couldn't find an account with the given username and/or password. Please try again.<br>";
         header('Location: ../user_login.php');
     }
+} else {
+    session_start();
+    session_destroy();
+    header('Location: ../user_login.php');
 }
 
 function newSession() {
