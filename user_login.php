@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -9,6 +13,14 @@
             Staff email: <input type="email" name="email"><br>
             Password: <input type="password" name="password"><br>
             <input type="submit" name="login">
-        </form> 
+        </form>
+
+        <?php
+        if (isset($_SESSION['error_message'])) {
+            echo $_SESSION['error_message'];
+
+            unset($_SESSION['error_message']);
+        }
+        ?>
     </body>
 </html>
