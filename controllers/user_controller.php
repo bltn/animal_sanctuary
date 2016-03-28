@@ -1,7 +1,6 @@
 <?php
 
-require_once('../model/db_connection.php');
-require_once('../model/user.php');
+require_once("../models/user.php");
 
 if (isset($_POST['login'])) {
 
