@@ -6,19 +6,23 @@ if (isset($_POST['login'])) {
 
     session_start();
 
-    if (newSession()) {
+    if (logIn()) {
         header('Location: ../index.php');
     } else {
         $_SESSION['error_message'] .= "We couldn't find an account with the given username and/or password. Please try again.<br>";
-        header('Location: ../user_login.php');
+        header('Location: ../views/user_login.php');
     }
 } else {
-    session_start();
-    session_destroy();
-    header('Location: ../user_login.php');
+    logOut();
 }
 
-function newSession() {
+function logOut() {
+    session_start();
+    session_destroy();
+    header('Location: ../views/user_login.php');
+}
+
+function logIn() {
     $signed_in = false;
     $user_exists = false;
 
