@@ -22,12 +22,13 @@ class Animal {
         $saved = false;
 
         if (empty($_SESSION['logged_in'])) {
-            return $saved;
+            echo "false";
         } else {
             $imgWriteErrors = $this->saveImage($this->picture_array);
             if (count($imgWriteErrors) > 0) {
-                foreach($imgWriteErrors as $err) {
-                    echo $err;
+                foreach($imgWriteErrors as $error) {
+                    $_SESSION['error_message'] .= $error;
+                    return $saved; // false 
                 }
             } else {
                 $sanitised_name = $db->quote($this->name);
@@ -35,10 +36,10 @@ class Animal {
                 $sanitised_description = $db->quote($this->description);
                 $user_id = $_SESSION['id'];
                 try {
-                    $db->exec("INSERT INTO animals (name, dateOfBirth, description, photo, available, userID) VALUES ($sanitised_name, $sanitised_dob, $sanitised_description, '$this->picture_location', '$user_id'");
+                    $db->exec("INSERT INTO animal (name, dateOfBirth, description, photo, available, userID) VALUES ($sanitised_name, $sanitised_dob, $sanitised_description, '$this->picture_location', true, '$user_id')");
                     $saved = true;
                 } catch (PDOException $e) {
-                    return $saved;
+                    $_SESSION['error_message'] = $e->getMessage();
                 }
             }
         }

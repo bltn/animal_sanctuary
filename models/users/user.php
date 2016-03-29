@@ -26,7 +26,7 @@ class StaffUser {
 
     public static function logInUser($email) {
         require(__DIR__.'/../db_connection.php');
-        session_start();
+        $sanitised_email = $db->quote($email);
         try {
             $user = $db->query("select * from user where email=$sanitised_email");
             $row = $user->fetch();
