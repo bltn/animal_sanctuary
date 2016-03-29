@@ -26,13 +26,19 @@ class StaffUser {
     }
 
     public static function logInUser($email) {
+        require_once(__DIR__.'/../db_connection.php');
         session_start();
-
-        $_SESSION['email'] = $email;
+        try {
+            $user = $db->query("select * from user where email=$sanitised_email");
+            $row = $user->fetch();
+        } catch (PDOException $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            header('Location: ../../views/sessions/user_login.php');
+        }
+        $_SESSION['email'] = $row['email'];
         $_SESSION['logged_in'] = true;
+        $_SESSION['id'] = $row['userID'];
     }
-
-
 }
 
 ?>
