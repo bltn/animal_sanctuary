@@ -4,9 +4,7 @@ class StaffUser {
 
     public static function exists($email, $password) {
 
-        session_start();
-
-        require('db_connection.php');
+        require_once(__DIR__.'/../db_connection.php');
 
         $exists = false;
 
@@ -28,6 +26,8 @@ class StaffUser {
     }
 
     public static function logInUser($email) {
+        session_start();
+
         $_SESSION['email'] = $email;
         $_SESSION['logged_in'] = true;
     }
