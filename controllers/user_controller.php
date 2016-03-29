@@ -1,16 +1,16 @@
 <?php
 
-require_once(__DIR__."/../../models/users/user.php");
+require_once(__DIR__."/../models/users/user.php");
 
 if (isset($_POST['login'])) {
 
     session_start();
 
     if (logIn()) {
-        header('Location: ../../index.php');
+        header('Location: ../index.php');
     } else {
         $_SESSION['error_message'] .= "We couldn't find an account with the given username and/or password. Please try again.<br>";
-        header('Location: ../../views/sessions/user_login.php');
+        header('Location: ../views/sessions/user_login.php');
     }
 } else {
     logOut();
@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
 function logOut() {
     session_start();
     session_destroy();
-    header('Location: ../../views/sessions/user_login.php');
+    header('Location: ../views/sessions/user_login.php');
 }
 
 function logIn() {
