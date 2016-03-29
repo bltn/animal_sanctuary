@@ -7,13 +7,19 @@
         <?php
         if (isset($_SESSION['logged_in'])) {
         ?>
-        <form action="../../controllers/animal_controller.php" method="post" id="add_animal_form">
+        <form action="../../controllers/animal_controller.php" method="post" id="add_animal_form" enctype="multipart/form-data">
             Animal's name: <input type="text" name="name"><br>
             Animal's DOB: <input type="date" name="dob"><br>
-            Desc: <textarea name="description" form="add_animal_form">Tell us about the animal...</textarea><br>
+            Desc: <textarea name="description" form="add_animal_form" placeholder="Tell us about the animal..."></textarea><br>
             Picture: <input type="file" name="picture"><br>
             <input type="submit" name="new_animal">
         </form>
+        <?php
+        if (!empty($_SESSION['error_message'])) {
+            echo $_SESSION['error_message'];
+            unset($_SESSION['error_message']);
+        }
+        ?>
         <?php
         } else {
             $_SESSION['error_message'] = "Please log in before trying to add animal.<br>";
