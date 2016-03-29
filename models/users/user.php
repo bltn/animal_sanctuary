@@ -3,8 +3,7 @@
 class StaffUser {
 
     public static function exists($email, $password) {
-
-        require_once(__DIR__.'/../db_connection.php');
+        require(__DIR__.'/../db_connection.php');
 
         $exists = false;
 
@@ -26,7 +25,7 @@ class StaffUser {
     }
 
     public static function logInUser($email) {
-        require_once(__DIR__.'/../db_connection.php');
+        require(__DIR__.'/../db_connection.php');
         session_start();
         try {
             $user = $db->query("select * from user where email=$sanitised_email");

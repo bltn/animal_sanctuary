@@ -1,5 +1,6 @@
 <?php
-require(__DIR__.'/../helpers/form_input_validator.php');
+require_once(__DIR__.'/../helpers/form_input_validator.php');
+require_once(__DIR__.'/../models/animals/animal.php');
 session_start();
 
 $_SESSION['error_message'] = "";
@@ -21,8 +22,12 @@ function newAnimal() {
         }
         header('Location: ../views/animals/add_animal.php');
     } else {
-        // map to DB
+        $animal = new Animal($_POST['name'], $_POST['dob'], $_POST['description'], $_FILES['picture']);
+        if ($animal->save()) {
+            header('Location: ../index.php');
+        } else {
+            header('Location: ../views/animals/add_animal.php');
+        }
     }
 }
-
 ?>
