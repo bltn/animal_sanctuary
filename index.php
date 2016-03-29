@@ -13,6 +13,6 @@ if(!isset($_SESSION['logged_in'])) {
         <title>All animals</title>
     </head>
     <body>
-        <?php if (isset($_SESSION['logged_in'])) {?> <a href='controllers/sessions/user_controller.php'>Log out</a> <?php } ?>
+        <?php if (isset($_SESSION['logged_in'])) {?> <a href='controllers/user_controller.php'>Log out</a> <?php } ?>
     </body>
 <html>
