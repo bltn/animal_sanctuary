@@ -16,11 +16,6 @@ class AnimalController {
 
     public function index() {
         require_once(__DIR__.'/../models/animals/animal.php');
-        /**if ($animals = Animal::listAll()) {
-            echo "reached";
-        } else {
-            echo "nt reached";
-        }**/
         $animals = Animal::listAll();
         if ($animals) {
             return $animals;

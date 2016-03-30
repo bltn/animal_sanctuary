@@ -1,49 +1,42 @@
 <?php
 
-require_once(__DIR__."/../models/users/user.php");
+class UserController {
 
-if (isset($_POST['login'])) {
+    public function __construct() {}
 
-    session_start();
+    public function log_in_staff_user($email, $password) {
+        require_once(__DIR__."/../models/users/user.php");
+        session_start();
 
-    if (logIn()) {
-        header('Location: ../index.php');
-    } else {
-        $_SESSION['error_message'] .= "We couldn't find an account with the given username and/or password. Please try again.<br>";
-        header('Location: ../views/sessions/user_login.php');
-    }
-} else {
-    logOut();
-}
+        $user_exists = false;
 
-function logOut() {
-    session_start();
-    session_destroy();
-    header('Location: ../views/sessions/user_login.php');
-}
+        $_SESSION['error_message'] = "";
 
-function logIn() {
-    $signed_in = false;
-    $user_exists = false;
-
-    $_SESSION['error_message'] = "";
-
-    if (!empty($_POST['email']) && !empty($_POST['password'])) {
         try {
             $user_exists = StaffUser::exists($_POST['email'], $_POST['password']);
         } catch (PDOException $e) {
-            $_SESSION['error_message'] .= $e->getMessage();
+            $_SESSION['error_message'] .= "We encountered an error querying the database. Try again later.<br>";
+            header('Location: ../views/sessions/user_login.php');
         }
-    } else {
-        $_SESSION['error_message'] .= "Please provide a valid username and password.<br>";
+
+        if ($user_exists) {
+            try {
+                StaffUser::logInUser($_POST['email']);
+                header('Location: ../index.php');
+            } catch (PDOException $e) {
+                $_SESSION['error_message'] .= "We encountered an error logging you in. Try again.<br>";
+                header('Location: ../views/sessions/user_login.php');
+            }
+        } else {
+            $_SESSION['error_message'] .= "We couldn't find you in the system. Please double check your email and password for spelling.<br>";
+            header('Location: ../views/sessions/user_login.php');
+        }
     }
 
-    if ($user_exists) {
-        StaffUser::logInUser($_POST['email']);
-        $signed_in = true;
+    public function log_out() {
+        session_start();
+        session_destroy();
+        header('Location: ../views/sessions/user_login.php');
     }
-
-    return $signed_in;
 }
-
 ?>

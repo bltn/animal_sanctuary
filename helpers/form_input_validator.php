@@ -23,6 +23,18 @@ class FormInputValidator {
         return $errors;
     }
 
+    public static function validateStaffUserLoginInput($email, $password) {
+        $errors = array();
+
+        if (empty($email)) {
+            $errors[] = "You need to provide an email address to log in.<br>";
+        }
+        if (empty($password)) {
+            $errors[] = "You need to enter a password to log in.<br>";
+        }
+        return $errors;
+    }
+
 }
 
 ?>

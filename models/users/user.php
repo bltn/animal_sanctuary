@@ -31,8 +31,7 @@ class StaffUser {
             $user = $db->query("select * from user where email=$sanitised_email");
             $row = $user->fetch();
         } catch (PDOException $e) {
-            $_SESSION['error_message'] = $e->getMessage();
-            header('Location: ../../views/sessions/user_login.php');
+            throw $e;
         }
         $_SESSION['email'] = $row['email'];
         $_SESSION['logged_in'] = true;
