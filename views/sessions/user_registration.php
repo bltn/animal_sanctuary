@@ -11,7 +11,7 @@ session_start();
         <form action="../../config/router.php" method="post">
             Email address: <input type="email" name="email"><br>
             Password: <input type="password" name="password"><br>
-            Password confirmation: <input type="password" name="password"><br>
+            Password confirmation: <input type="password" name="password_confirmation"><br>
             <input type="submit" name="sign_up">
         </form>
 

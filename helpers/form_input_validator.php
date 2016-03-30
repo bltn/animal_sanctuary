@@ -35,6 +35,24 @@ class FormInputValidator {
         return $errors;
     }
 
+    public static function validateUserRegistrationInput($email, $password, $password_confirmation) {
+        $errors = array();
+
+        if (empty($email)) {
+            $errors[] = "Please provide a valid email address.<br>";
+        }
+        if (empty($password)) {
+            $errors[] = "Please provide a password for your account.<br>";
+        }
+        if (empty($password_confirmation)) {
+            $errors[] = "Please confirm the password you'd like to use for your account.<br>";
+        }
+        if (strcmp($password, $password_confirmation) != 0) {
+            $errors[] = "Your password and confirmation don't match.<br>";
+        }
+        return $errors;
+    }
+
 }
 
 ?>

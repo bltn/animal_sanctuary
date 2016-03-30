@@ -34,5 +34,14 @@ if (isset($_POST['new_animal'])) {
 } else if (isset($_GET['log_out'])) {
     $controller = new UserController();
     $controller->log_out();
+} else if (isset($_POST['sign_up'])) {
+    $inputValidationErrors = FormInputValidator::validateUserRegistrationInput($_POST['email'], $_POST['password'], $_POST['password_confirmation']);
+
+    if (count($inputValidationErrors) > 0) {
+        foreach ($inputValidationErrors as $error) {
+            $_SESSION['error_message'] .= $error;
+        }
+        header('Location: ../views/sessions/user_registration.php');
+    }
 }
 ?>
