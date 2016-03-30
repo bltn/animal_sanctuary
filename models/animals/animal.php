@@ -17,6 +17,17 @@ class Animal {
         $this->picture_array = $picture_array;
     }
 
+    public static function listAll() {
+        require_once(__DIR__.'/../db_connection.php');
+        try {
+            $rows = $db->query("SELECT * from animal");
+            return $rows;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = "There was an error retrieving the animals. Please refresh the page.<br>";
+            return false;
+        }
+    }
+
     public function save() {
         require_once(__DIR__.'/../db_connection.php');
         $saved = false;
