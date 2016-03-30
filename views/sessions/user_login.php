@@ -5,7 +5,7 @@ session_start();
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Staff log in page</title>
+        <title>Log in page</title>
     </head>
     <body>
         <h1>Log in (staff)</h1>
