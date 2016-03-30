@@ -24,7 +24,15 @@ class AnimalController {
 
     public function index() {
         require_once(__DIR__.'/../models/animals/animal.php');
-        $animals = Animal::listAll();
+        $animals = Animal::list_all();
+        if ($animals) {
+            return $animals;
+        }
+    }
+
+    public function available_index() {
+        require_once(__DIR__.'/../models/animals/animal.php');
+        $animals = Animal::list_all_available();
         if ($animals) {
             return $animals;
         }

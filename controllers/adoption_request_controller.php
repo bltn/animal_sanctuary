@@ -7,10 +7,8 @@
             require(__DIR__.'/../models/adoption_requests/adoption_request.php');
             $saved = false;
             try {
-                echo "b4";
                 $request = new AdoptionRequest($user_id, $animal_id);
                 $saved = $request->save();
-                echo "after";
                 if ($saved) {
                     header('Location: ../views/animals/show_animal.php?id=' . $animal_id);
                 } else {
@@ -20,6 +18,14 @@
             } catch (PDOException $e) {
                 $_SESSION['error_message'] = $e->getMessage();
                 header('Location: ../views/animals/show_animal.php?id=' . $animal_id);
+            }
+        }
+
+        public function index() {
+            require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            $requests = AdoptionRequest::list_all();
+            if ($requests) {
+                return $requests;
             }
         }
     }

@@ -8,7 +8,11 @@ $animal_controller = new AnimalController();
     </head>
     <body>
         <?php
-        $animal_list = $animal_controller->index();
+        if ($_SESSION['staff'] == false) {
+            $animal_list = $animal_controller->available_index();
+        } else {
+            $animal_list = $animal_controller->index();
+        }
         ?>
         <table>
             <tr>

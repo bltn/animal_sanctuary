@@ -17,10 +17,21 @@ class Animal {
         $this->picture_array = $picture_array;
     }
 
-    public static function listAll() {
+    public static function list_all() {
         require_once(__DIR__.'/../db_connection.php');
         try {
             $rows = $db->query("SELECT * from animal");
+            return $rows;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = "There was an error retrieving the animals. Please refresh the page.<br>";
+            return false;
+        }
+    }
+
+    public static function list_all_available() {
+        require_once(__DIR__.'/../db_connection.php');
+        try {
+            $rows = $db->query("SELECT * from animal WHERE available=true");
             return $rows;
         } catch (PDOEXception $e) {
             $_SESSION['error_message'] = "There was an error retrieving the animals. Please refresh the page.<br>";
