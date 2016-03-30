@@ -7,7 +7,7 @@
         <?php
         if (isset($_SESSION['logged_in'])) {
         ?>
-        <form action="../../controllers/animal_controller.php" method="post" id="add_animal_form" enctype="multipart/form-data">
+        <form action="../../config/router.php" method="post" id="add_animal_form" enctype="multipart/form-data">
             Animal's name: <input type="text" name="name"><br>
             Animal's DOB: <input type="date" name="dob"><br>
             Desc: <textarea name="description" form="add_animal_form" placeholder="Tell us about the animal..."></textarea><br>

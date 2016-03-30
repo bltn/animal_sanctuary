@@ -1,28 +1,12 @@
 <?php
-require_once(__DIR__.'/../helpers/form_input_validator.php');
-require_once(__DIR__.'/../models/animals/animal.php');
-session_start();
+class AnimalController {
 
-$_SESSION['error_message'] = "";
+    public function __construct() {}
 
-if (!isset($_SESSION['logged_in'])) {
-    $_SESSION['error_message'] = "You need to be logged in to create an animal.<br>";
-    header('Location: ../../views/sessions/user_login.php');
-} else {
-    newAnimal();
-}
+    public function new_animal($name, $dob, $description, $picture) {
+        require_once(__DIR__.'/../models/animals/animal.php');
 
-function newAnimal() {
-
-    $inputValidationErrors = FormInputValidator::validateNewAnimalInput($_POST['name'], $_POST['dob'], $_POST['description'], $_FILES['picture']['error']);
-
-    if (count($inputValidationErrors) > 0) {
-        foreach ($inputValidationErrors as $error) {
-            $_SESSION['error_message'] .= $error;
-        }
-        header('Location: ../views/animals/add_animal.php');
-    } else {
-        $animal = new Animal($_POST['name'], $_POST['dob'], $_POST['description'], $_FILES['picture']);
+        $animal = new Animal($name, $dob, $description, $picture);
         if ($animal->save()) {
             header('Location: ../index.php');
         } else {

@@ -28,7 +28,7 @@ class Animal {
             if (count($imgWriteErrors) > 0) {
                 foreach($imgWriteErrors as $error) {
                     $_SESSION['error_message'] .= $error;
-                    return $saved; // false 
+                    return $saved; // false
                 }
             } else {
                 $sanitised_name = $db->quote($this->name);
@@ -51,6 +51,7 @@ class Animal {
 
         $name = $picture['name'];
         $type = $picture['type'];
+        echo $type;
         if (($type == "image/jpeg")||($type == "image/png")||($type == "image/gif")) {
             move_uploaded_file($picture['tmp_name'], __DIR__.'/../../images/' . $name);
             $this->picture_location = __DIR__.'/../../images/' . $name;
