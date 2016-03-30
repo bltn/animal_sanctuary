@@ -42,6 +42,9 @@ if (isset($_POST['new_animal'])) {
             $_SESSION['error_message'] .= $error;
         }
         header('Location: ../views/sessions/user_registration.php');
+    } else {
+        $controller = new UserController();
+        $controller->register_customer_user($_POST['email'], $_POST['password']);
     }
 }
 ?>

@@ -5,20 +5,16 @@ class UserController {
     public function __construct() {}
 
     public function log_in_staff_user($email, $password) {
-        require_once(__DIR__."/../models/users/user.php");
+        require_once(__DIR__."/../models/users/staff_user.php");
         session_start();
-
         $user_exists = false;
-
         $_SESSION['error_message'] = "";
-
         try {
-            $user_exists = StaffUser::exists($_POST['email'], $_POST['password']);
+            $user_exists = StaffUser::exists($email, $password);
         } catch (PDOException $e) {
             $_SESSION['error_message'] .= "We encountered an error querying the database. Try again later.<br>";
             header('Location: ../views/sessions/user_login.php');
         }
-
         if ($user_exists) {
             try {
                 StaffUser::logInUser($_POST['email']);
@@ -30,6 +26,26 @@ class UserController {
         } else {
             $_SESSION['error_message'] .= "We couldn't find you in the system. Please double check your email and password for spelling.<br>";
             header('Location: ../views/sessions/user_login.php');
+        }
+    }
+
+    public function register_customer_user($email, $password) {
+        require_once(__DIR__."/../models/users/customer_user.php");
+        $_SESSION['error_message'] = "";
+        try {
+            $clashes = CustomerUser::exists($email, $password);
+        } catch (PDOException $e) {
+            $_SESSION['error_message'] .= "We encountered an error querying the database. Try again later.<br>";
+            header('Location: ../views/sessions/user_registration.php');
+        }
+
+        if (empty($clashes)) {
+            // save
+        } else {
+            foreach ($clashes as $clash_message) {
+                $_SESSION['error_message'] .= $clash_message . "<br>";
+            }
+            header('Location: ../views/sessions/user_registration.php');
         }
     }
 
