@@ -4,7 +4,7 @@ $_SESSION['error_message'] = "";
 require_once(__DIR__.'/../helpers/form_input_validator.php');
 require_once(__DIR__.'/../controllers/animal_controller.php');
 require_once(__DIR__.'/../controllers/user_controller.php');
-
+require_once(__DIR__.'/../controllers/adoption_request_controller.php');
 
 if (isset($_POST['new_animal'])) {
 
@@ -51,5 +51,8 @@ if (isset($_POST['new_animal'])) {
         $controller = new UserController();
         $controller->register_customer_user($_POST['email'], $_POST['password']);
     }
+} else if (isset($_GET['request_adoption'])) {
+    $controller = new AdoptionRequestController();
+    $controller->create_adoption_request($_SESSION['id'], $_GET['animal_id']);
 }
 ?>

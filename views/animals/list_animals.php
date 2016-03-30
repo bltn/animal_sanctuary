@@ -15,6 +15,7 @@ $animal_controller = new AnimalController();
                 <th>Name</th>
                 <th>Age</th>
                 <th>Photo</th>
+                <th>Link</th>
             </tr>
             <?php
             if (!empty($animal_list)) {
@@ -23,6 +24,7 @@ $animal_controller = new AnimalController();
                     echo "<th>" . $animal['name'] . "</th>";
                     echo "<th>" . date_diff(date_create($animal['dateOfBirth']), date_create('today'))->y . " years old" . "</th>";
                     echo "<th> <img src=\"" . $animal['photo'] . "\" height=\"70\" width=\"70\"></th>";
+                    echo "<th> <a href='show_animal.php?id=" . $animal['animalID'] . "'>Details</a></th>";
                     echo "</tr>";
                 }
             }

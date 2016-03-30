@@ -28,6 +28,19 @@ class Animal {
         }
     }
 
+    public static function find($id) {
+        require_once(__DIR__.'/../db_connection.php');
+        try {
+            $sanitised_id = $db->quote($id);
+            $row = $db->query("SELECT * from animal where animalID=$sanitised_id");
+            $user = $row->fetch();
+            return $user;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = "There was an error retrieving the animal's details.<br>";
+            header('Location: ../../views/animals/show_animal.php');
+        }
+    }
+
     public function save() {
         require_once(__DIR__.'/../db_connection.php');
         $saved = false;
