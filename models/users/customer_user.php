@@ -21,6 +21,7 @@ class CustomerUser {
         }
         $_SESSION['email'] = $row['email'];
         $_SESSION['logged_in'] = true;
+        $_SESSION['staff'] = false;
         $_SESSION['id'] = $row['userID'];
         $logged_in = true;
     }
@@ -39,7 +40,29 @@ class CustomerUser {
         return $saved;
     }
 
-    public static function exists($email, $password) {
+    public function exists() {
+        require(__DIR__.'/../db_connection.php');
+
+        $exists = false;
+
+        $sanitised_email = $db->quote($this->email);
+        $hashed_password = md5($this->password);
+        if ($db != null) {
+            try {
+                $user = $db->query("select * from user where email=$sanitised_email");
+                $row = $user->fetch();
+
+                if ($row['password'] == $hashed_password) {
+                    $exists = true;
+                }
+            } catch (PDOException $e) {
+                throw new PDOException($e->getMessage());
+            }
+        }
+        return $exists;
+    }
+
+    public static function check_for_clashes($email, $password) {
         require(__DIR__.'/../db_connection.php');
         $clashes = array();
         $sanitised_email = $db->quote($email);

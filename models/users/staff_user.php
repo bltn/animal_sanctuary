@@ -36,6 +36,7 @@ class StaffUser {
         $_SESSION['email'] = $row['email'];
         $_SESSION['logged_in'] = true;
         $_SESSION['id'] = $row['userID'];
+        $_SESSION['staff'] = true;
     }
 }
 

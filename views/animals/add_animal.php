@@ -5,7 +5,7 @@
     </head>
     <body>
         <?php
-        if (isset($_SESSION['logged_in'])) {
+        if (isset($_SESSION['id']) && $_SESSION['staff'] == true) {
         ?>
         <form action="../../config/router.php" method="post" id="add_animal_form" enctype="multipart/form-data">
             Animal's name: <input type="text" name="name"><br>
@@ -21,6 +21,8 @@
         }
         ?>
         <?php
+        } else if (isset($_SESSION['id']) && $_SESSION['staff'] == false) {
+            echo "<strong>Non-staff users can't add animals to the directory.</strong>";
         } else {
             $_SESSION['error_message'] = "Please log in before trying to add animal.<br>";
             header('Location: ../sessions/user_login.php');

@@ -23,7 +23,7 @@ class FormInputValidator {
         return $errors;
     }
 
-    public static function validateStaffUserLoginInput($email, $password) {
+    public static function validateUserLoginInput($email, $password) {
         $errors = array();
 
         if (empty($email)) {
@@ -33,6 +33,23 @@ class FormInputValidator {
             $errors[] = "You need to enter a password to log in.<br>";
         }
         return $errors;
+    }
+
+    public static function isStaffEmail($email) {
+        require(__DIR__.'/../models/db_connection.php');
+        try {
+            $sanitised_email = $db->quote($email);
+            $row = $db->query("select * from user where email=$sanitised_email");
+            $user = $row->fetch();
+            if ($user['staff'] == 1) {
+                $is_staff = true;
+            } else {
+                $is_staff = false;
+            }
+            return $is_staff;
+        } catch (PDOException $e) {
+            throw $e;
+        }
     }
 
     public static function validateUserRegistrationInput($email, $password, $password_confirmation) {

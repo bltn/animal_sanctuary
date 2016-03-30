@@ -16,7 +16,7 @@ session_start();
         ?>
         <h1>Log in</h1>
         <form action="../../config/router.php" method="post">
-            Staff email: <input type="email" name="email"><br>
+            Email: <input type="email" name="email"><br>
             Password: <input type="password" name="password"><br>
             <input type="submit" name="login">
         </form>

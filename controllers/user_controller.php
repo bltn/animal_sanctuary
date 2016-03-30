@@ -34,11 +34,42 @@ class UserController {
         }
     }
 
+    public function log_in_customer_user($email, $password) {
+        if (!isset($_SESSION['id'])) {
+            require_once(__DIR__."/../models/users/customer_user.php");
+            session_start();
+            $user_exists = false;
+            $_SESSION['error_message'] = "";
+            $user = new CustomerUser($email, $password);
+            try {
+                $user_exists = $user->exists($email, $password);
+            } catch (PDOException $e) {
+                $_SESSION['error_message'] .= "We encountered an error querying the database. Try again later.<br>";
+                header('Location: ../views/sessions/user_login.php');
+            }
+            if ($user_exists) {
+                try {
+                    $user->log_in();
+                    header('Location: ../index.php');
+                } catch (PDOException $e) {
+                    $_SESSION['error_message'] .= "We encountered an error logging you in. Try again.<br>";
+                    header('Location: ../views/sessions/user_login.php');
+                }
+            } else {
+                $_SESSION['error_message'] .= "We couldn't find you in the system. Please double check your email and password for spelling.<br>";
+                header('Location: ../views/sessions/user_login.php');
+            }
+        } else {
+            $_SESSION['error_message'] = "You're already logged in, silly.<br>";
+            header('Location: ../index.php');
+        }
+    }
+
     public function register_customer_user($email, $password) {
         require_once(__DIR__."/../models/users/customer_user.php");
         $_SESSION['error_message'] = "";
         try {
-            $clashes = CustomerUser::exists($email, $password);
+            $clashes = CustomerUser::check_for_clashes($email, $password);
         } catch (PDOException $e) {
             $_SESSION['error_message'] .= "We encountered an error querying the database. Try again later.<br>";
             header('Location: ../views/sessions/user_registration.php');

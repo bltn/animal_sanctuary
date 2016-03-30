@@ -20,7 +20,7 @@ if (isset($_POST['new_animal'])) {
         $controller->new_animal($_POST['name'], $_POST['dob'], $_POST['description'], $_FILES['picture']);
     }
 } else if (isset($_POST['login'])) {
-    $inputValidationErrors = FormInputValidator::validateStaffUserLoginInput($_POST['email'], $_POST['password']);
+    $inputValidationErrors = FormInputValidator::validateUserLoginInput($_POST['email'], $_POST['password']);
 
     if (count($inputValidationErrors) > 0) {
         foreach ($inputValidationErrors as $error) {
@@ -28,8 +28,13 @@ if (isset($_POST['new_animal'])) {
         }
         header('Location: ../views/sessions/user_login.php');
     } else {
-        $controller = new UserController();
-        $controller->log_in_staff_user($_POST['email'], $_POST['password']);
+        if (FormInputValidator::isStaffEmail($_POST['email'])) {
+            $controller = new UserController();
+            $controller->log_in_staff_user($_POST['email'], $_POST['password']);
+        } else {
+            $controller = new UserController();
+            $controller->log_in_customer_user($_POST['email'], $_POST['password']);
+        }
     }
 } else if (isset($_GET['log_out'])) {
     $controller = new UserController();
