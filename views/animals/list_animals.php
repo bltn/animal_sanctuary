@@ -10,15 +10,24 @@ $animal_controller = new AnimalController();
         <?php
         $animal_list = $animal_controller->index();
         ?>
-        <ul>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Photo</th>
+            </tr>
             <?php
             if (!empty($animal_list)) {
                 foreach($animal_list as $animal) {
-                    echo "<li>" . $animal['name'] . ", " . $animal['dateOfBirth'] . "</li>";
+                    echo "<tr>";
+                    echo "<th>" . $animal['name'] . "</th>";
+                    echo "<th>" . date_diff(date_create($animal['dateOfBirth']), date_create('today'))->y . " years old" . "</th>";
+                    echo "<th> <img src=\"" . $animal['photo'] . "\" height=\"70\" width=\"70\"></th>";
+                    echo "</tr>";
                 }
             }
             ?>
-        </ul>
+        </table>
         <?php
         if (!empty($_SESSION['error_message'])) {
             echo $_SESSION['error_message'];

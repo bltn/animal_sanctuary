@@ -65,7 +65,7 @@ class Animal {
         echo $type;
         if (($type == "image/jpeg")||($type == "image/png")||($type == "image/gif")) {
             move_uploaded_file($picture['tmp_name'], __DIR__.'/../../images/' . $name);
-            $this->picture_location = __DIR__.'/../../images/' . $name;
+            $this->picture_location = '/animal_sanctuary/images/' . $name;
         } else {
             $saveErrors[] = "Wrong file type. Only jpeg, png and gif are allowed.<br>";
         }
