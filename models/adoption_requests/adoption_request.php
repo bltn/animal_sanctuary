@@ -16,7 +16,7 @@ class AdoptionRequest {
             $request = $db->query("SELECT * from adoptionRequest WHERE adoptionID=$sanitised_request_id");
             $request_details = $request->fetch();
             $animal_id = $request_details['animalID'];
-            $db->exec("UPDATE adoptionRequest SET closed=true WHERE adoptionID=$sanitised_request_id");
+            $db->exec("UPDATE adoptionRequest SET closed=true AND approved=false WHERE adoptionID=$sanitised_request_id");
             $db->exec("UPDATE animal SET available=true WHERE animalID=$animal_id");
             $processed = true;
             echo "DONE";
@@ -35,10 +35,9 @@ class AdoptionRequest {
             $request_details = $request->fetch();
             $user_id = $request_details['userID'];
             $animal_id = $request_details['animalID'];
-            $db->exec("UPDATE adoptionRequest SET closed=true WHERE adoptionID=$sanitised_request_id");
-            $db->exec("UPDATE animal SET available=false AND userID=$user_id WHERE animalID=$animal_id");
+            $db->exec("UPDATE adoptionRequest SET closed=true, approved=true WHERE adoptionID=$sanitised_request_id");
+            $db->exec("UPDATE animal SET available=false, userID='$user_id' WHERE animalID='$animal_id'");
             $processed = true;
-            echo "DONE";
         } catch (PDOException $e) {
             throw $e;
         }
@@ -58,6 +57,34 @@ class AdoptionRequest {
             throw $e;
         }
         return $saved;
+    }
+
+    public static function list_all_closed() {
+        require_once(__DIR__.'/../db_connection.php');
+        try {
+            $rows = $db->query("SELECT * from adoptionRequest WHERE closed=true");
+            $requests = array();
+            foreach($rows as $row) {
+                $animal_id = $row['animalID'];
+                $user_id = $row['userID'];
+                $animal = $db->query("SELECT * from animal WHERE animalID=$animal_id");
+                $animal_details = $animal->fetch();
+                $row['animal_name'] = $animal_details['name'];
+                $user = $db->query("SELECT * from user WHERE userID=$user_id");
+                $user_details = $user->fetch();
+                $row['owner_email'] = $user_details['email'];
+                if ($user_details['staff'] == true) {
+                    $row['owner_is_staff'] = true;
+                } else {
+                    $row['owner_is_staff'] = false;
+                }
+                $requests[] = $row;
+            }
+            return $requests;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            return false;
+        }
     }
 
     public static function list_all_pending() {

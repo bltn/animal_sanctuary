@@ -26,9 +26,10 @@
             try {
                 $processed = AdoptionRequest::approve($request_id);
                 if ($processed) {
-                    echo "processed";
+                    header('Location: /animal_sanctuary/index.php');
                 } else {
-                    echo "not processed";
+                    $_SESSION['error_message'] = "There was an error processing the adoption request. Please try again.";
+                    header('Location: /animal_sanctuary/index.php');
                 }
             } catch (PDOException $e) {
                 echo $e->getMessage();
@@ -48,6 +49,14 @@
             } catch (PDOException $e) {
                 $_SESSION['error_message'] = "There was an error processing the adoption request. Please try again.";
                 header('Location: /animal_sanctuary/index.php');
+            }
+        }
+
+        public function closed_index() {
+            require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            $requests = AdoptionRequest::list_all_closed();
+            if ($requests) {
+                return $requests;
             }
         }
 
