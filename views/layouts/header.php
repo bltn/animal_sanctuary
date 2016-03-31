@@ -8,6 +8,8 @@ if ($_SESSION['logged_in']) {
         echo "<li><a href='/animal_sanctuary/views/animals/list_animals.php'>View all animals</a></li>";
         echo "<li><a href=\"/animal_sanctuary/config/router.php?log_out\">Log out</a></li>";
     } else {
+        echo "<li><a href='/animal_sanctuary/views/animals/list_available_animals.php'>View available animals</a></li>"; 
+        echo "<li><a href=\"/animal_sanctuary/config/router.php?log_out\">Log out</a></li>";
     }
 } else {
     echo "<li><a href=\"/animal_sanctuary/views/sessions/user_login.php\">Log in</a></li>";

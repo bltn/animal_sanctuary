@@ -17,6 +17,18 @@ class Animal {
         $this->picture_array = $picture_array;
     }
 
+    public static function list_user_animals($user_id) {
+        require(__DIR__.'/../db_connection.php');
+        try {
+            $sanitised_user_id = $db->quote($user_id);
+            $rows = $db->query("SELECT * from animal WHERE userID=$sanitised_user_id");
+            return $rows;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = "There was an error retrieving the animals. Please refresh the page.<br>";
+            return false;
+        }
+    }
+
     public static function list_all() {
         require(__DIR__.'/../db_connection.php');
         try {

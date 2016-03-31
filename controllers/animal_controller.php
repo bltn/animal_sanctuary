@@ -14,6 +14,15 @@ class AnimalController {
         }
     }
 
+    public function list_user_animals($user_id) {
+        require_once(__DIR__.'/../models/animals/animal.php');
+        $animals = null;
+        $animals = Animal::list_user_animals($user_id);
+        if ($animals) {
+            return $animals;
+        }
+    }
+
     public function show($id) {
         require_once(__DIR__.'/../models/animals/animal.php');
         $animal = Animal::find($id);

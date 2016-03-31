@@ -21,6 +21,11 @@ if(!isset($_SESSION['logged_in'])) {
             include('views/adoption_requests/list_pending_requests.php');
             echo "<h1>Animals available for adoption<h1>";
             include('views/animals/list_available_animals.php');
+        } else {
+            echo "<h1>Your animals</h1>";
+            include('views/animals/list_user_animals.php');
+            echo "<h1>Your pending adoptions</h1>";
+            include('views/adoption_requests/list_user_pending_requests');
         }
         ?>
     </body>
