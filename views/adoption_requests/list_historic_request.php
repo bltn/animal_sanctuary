@@ -28,8 +28,8 @@ if (!empty($request_list)) {
         } else {
             echo "<td>Approved</td>";
         }
-        echo "<td> <a href='/animal_sanctuary/config/router.php?process_adoption&request_id=" . $request['adoptionID'] . "&approve=true'>Approve</a></td>";
-        echo "<td> <a href='/animal_sanctuary/config/router.php?process_adoption&request_id=" . $request['adoptionID'] . "&approve=false'>Deny</a></td>";
+        echo "<td> <a href='../../config/router.php?request_id=" . $request['adoptionID'] . "&approve=true'>Approve</a></td>";
+        echo "<td> <a href='../../config/router.php?request_id=" . $request['adoptionID'] . "&approve=false'>Deny</a></td>";
         echo "<td> <a href='../animals/show_animal.php?id=" . $request['animalID'] . "'>Animal details</a></td>";
         echo "</tr>";
     }

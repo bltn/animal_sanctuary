@@ -54,5 +54,13 @@ if (isset($_POST['new_animal'])) {
 } else if (isset($_GET['request_adoption'])) {
     $controller = new AdoptionRequestController();
     $controller->create_adoption_request($_SESSION['id'], $_GET['animal_id']);
+} else if (isset($_GET['process_adoption'])) {
+    if ($_GET['approve'] == "false") {
+        $controller = new AdoptionRequestController();
+        $controller->deny_adoption_request($_GET['request_id']);
+    } else {
+        $controller = new AdoptionRequestController();
+        $controller->approve_adoption_request($_GET['request_id']);
+    }
 }
 ?>

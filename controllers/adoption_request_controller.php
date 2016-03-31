@@ -21,6 +21,22 @@
             }
         }
 
+        public function deny_adoption_request($request_id) {
+            require(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            try {
+                $processed = AdoptionRequest::deny($request_id);
+                if ($processed) {
+                    header('Location: /animal_sanctuary/index.php');
+                } else {
+                    $_SESSION['error_message'] = "There was an error processing the adoption request. Please try again.";
+                    header('Location: /animal_sanctuary/index.php');
+                }
+            } catch (PDOException $e) {
+                $_SESSION['error_message'] = "There was an error processing the adoption request. Please try again.";
+                header('Location: /animal_sanctuary/index.php');
+            }
+        }
+
         public function pending_index() {
             require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
             $requests = AdoptionRequest::list_all_pending();

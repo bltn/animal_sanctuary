@@ -8,6 +8,24 @@ class AdoptionRequest {
         $this->animal_id = $animal_id;
     }
 
+    public static function deny($request_id) {
+        require_once(__DIR__.'/../db_connection.php');
+        $processed = false;
+        try {
+            $sanitised_request_id = $db->quote($request_id);
+            $request = $db->query("SELECT * from adoptionRequest WHERE adoptionID=$sanitised_request_id");
+            $request_details = $request->fetch();
+            $animal_id = $request_details['animalID'];
+            $db->exec("UPDATE adoptionRequest SET closed=true WHERE adoptionID=$sanitised_request_id");
+            $db->exec("UPDATE animal SET available=true WHERE animalID=$animal_id");
+            $processed = true;
+            echo "DONE";
+        } catch (PDOException $e) {
+            throw $e;
+        }
+        return $processed;
+    }
+
     public function save() {
         require_once(__DIR__.'/../db_connection.php');
         $saved = false;
@@ -17,7 +35,6 @@ class AdoptionRequest {
             $db->exec("INSERT INTO adoptionRequest (userID, animalID, approved) VALUES ($sanitised_user_id, $sanitised_animal_id, false)");
             $db->exec("UPDATE animal SET available=false WHERE animalID=$sanitised_animal_id");
             $saved = true;
-            echo "DONE";
         } catch (PDOException $e) {
             throw $e;
         }
@@ -27,7 +44,7 @@ class AdoptionRequest {
     public static function list_all_pending() {
         require_once(__DIR__.'/../db_connection.php');
         try {
-            $rows = $db->query("SELECT * from adoptionRequest");
+            $rows = $db->query("SELECT * from adoptionRequest WHERE closed=false");
             $requests = array();
             foreach($rows as $row) {
                 $animal_id = $row['animalID'];
