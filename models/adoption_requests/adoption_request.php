@@ -26,6 +26,25 @@ class AdoptionRequest {
         return $processed;
     }
 
+    public static function approve($request_id) {
+        require_once(__DIR__.'/../db_connection.php');
+        $processed = false;
+        try {
+            $sanitised_request_id = $db->quote($request_id);
+            $request = $db->query("SELECT * from adoptionRequest WHERE adoptionID=$sanitised_request_id");
+            $request_details = $request->fetch();
+            $user_id = $request_details['userID'];
+            $animal_id = $request_details['animalID'];
+            $db->exec("UPDATE adoptionRequest SET closed=true WHERE adoptionID=$sanitised_request_id");
+            $db->exec("UPDATE animal SET available=false AND userID=$user_id WHERE animalID=$animal_id");
+            $processed = true;
+            echo "DONE";
+        } catch (PDOException $e) {
+            throw $e;
+        }
+        return $processed;
+    }
+
     public function save() {
         require_once(__DIR__.'/../db_connection.php');
         $saved = false;

@@ -21,6 +21,20 @@
             }
         }
 
+        public function approve_adoption_request($request_id) {
+            require(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            try {
+                $processed = AdoptionRequest::approve($request_id);
+                if ($processed) {
+                    echo "processed";
+                } else {
+                    echo "not processed";
+                }
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
         public function deny_adoption_request($request_id) {
             require(__DIR__.'/../models/adoption_requests/adoption_request.php');
             try {
