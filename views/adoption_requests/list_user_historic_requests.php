@@ -14,7 +14,7 @@
         if ($_SESSION['staff'] == true) {
             echo "You need to be a customer user.";
         } else {
-            $request_list = $request_controller->closed_index($user_id);
+            $request_list = $request_controller->closed_user_index($_SESSION['id']);
         }
     } else {
         header('Location: ../sessions/user_login.php');
