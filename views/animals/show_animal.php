@@ -1,14 +1,18 @@
-<?php session_start();
+<?php
+session_start();
 require_once(__DIR__.'/../../controllers/animal_controller.php');
 
 $animal_controller = new AnimalController();
 ?>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="/animal_sanctuary/views/stylesheets/style.css">
+        <meta charset="utf-8">
         <title>Animal details!</title>
     </head>
     <body>
         <?php
+        include('../layouts/header.php');
         $animal = $animal_controller->show($_GET['id']);
         ?>
         <table>

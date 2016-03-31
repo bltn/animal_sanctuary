@@ -2,9 +2,12 @@
 <html>
     <head>
         <title>Add a new animal</title>
+        <link rel="stylesheet" type="text/css" href="/animal_sanctuary/views/stylesheets/style.css">
+        <meta charset="utf-8">
     </head>
     <body>
         <?php
+        include('../layouts/header.php');
         if (isset($_SESSION['id']) && $_SESSION['staff'] == true) {
         ?>
         <form action="../../config/router.php" method="post" id="add_animal_form" enctype="multipart/form-data">

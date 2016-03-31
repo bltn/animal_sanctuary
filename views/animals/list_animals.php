@@ -1,4 +1,13 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/animal_sanctuary/views/stylesheets/style.css">
+    <meta charset="utf-8">
+    <title>All animals</title>
+</head>
+<body>
 <?php
+session_start();
+include('../layouts/header.php');
 require_once(__DIR__.'/../../controllers/animal_controller.php');
 $animal_controller = new AnimalController();
 $animal_list = $animal_controller->index();
@@ -37,3 +46,5 @@ if (!empty($_SESSION['error_message'])) {
     unset($_SESSION['error_message']);
 }
 ?>
+</body>
+</html>

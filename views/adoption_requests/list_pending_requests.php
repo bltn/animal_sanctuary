@@ -1,4 +1,5 @@
-<?php session_start();
+<?php
+session_start();
 require_once(__DIR__.'/../../controllers/adoption_request_controller.php');
 $request_controller = new AdoptionRequestController();
 if (isset($_SESSION['id'])) {
