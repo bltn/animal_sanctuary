@@ -67,5 +67,13 @@
                 return $requests;
             }
         }
+
+        public function user_pending_index($user_id) {
+            require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            $requests = AdoptionRequest::list_pending($user_id);
+            if ($requests) {
+                return $requests;
+            }
+        }
     }
 ?>

@@ -3,7 +3,7 @@ session_start();
 require_once(__DIR__.'/../../controllers/animal_controller.php');
 $animal_controller = new AnimalController();
 
-$animal_list = $animal_controller->index();
+$animal_list = $animal_controller->available_index();
 ?>
 <table>
     <tr>

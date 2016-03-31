@@ -25,7 +25,7 @@ if(!isset($_SESSION['logged_in'])) {
             echo "<h1>Your animals</h1>";
             include('views/animals/list_user_animals.php');
             echo "<h1>Your pending adoptions</h1>";
-            include('views/adoption_requests/list_user_pending_requests');
+            include('views/adoption_requests/list_user_pending_requests.php');
         }
         ?>
     </body>
