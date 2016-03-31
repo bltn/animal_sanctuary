@@ -1,31 +1,25 @@
 <?php
+session_start();
 require_once(__DIR__.'/../../controllers/animal_controller.php');
 $animal_controller = new AnimalController();
-$animal_list = $animal_controller->index();
 
+$animal_list = $animal_controller->index();
 ?>
 <table>
     <tr>
         <th>Name</th>
         <th>Age</th>
-        <th>Owner email</th>
         <th>Photo</th>
         <th>Link</th>
     </tr>
 <?php
 if (!empty($animal_list)) {
     foreach($animal_list as $animal) {
-        if ($animal['owner_is_staff'] == true) {
-            $owner_status = "(staff)";
-        } else {
-            $owner_status = "(customer)";
-        }
         echo "<tr>";
         echo "<th>" . $animal['name'] . "</th>";
         echo "<th>" . date_diff(date_create($animal['dateOfBirth']), date_create('today'))->y . " years old" . "</th>";
-        echo "<th>" . $animal['owner_email'] . " " . $owner_status . " " . "</th>";
         echo "<th> <img src=\"" . $animal['photo'] . "\" height=\"70\" width=\"70\"></th>";
-        echo "<th> <a href='show_animal.php?id=" . $animal['animalID'] . "'>Details</a></th>";
+        echo "<th> <a href='/animal_sanctuary/views/animals/show_animal.php?id=" . $animal['animalID'] . "'>Details</a></th>";
         echo "</tr>";
     }
 }

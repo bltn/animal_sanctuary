@@ -18,18 +18,51 @@ class Animal {
     }
 
     public static function list_all() {
-        require_once(__DIR__.'/../db_connection.php');
+        require(__DIR__.'/../db_connection.php');
         try {
             $rows = $db->query("SELECT * from animal");
-            return $rows;
+            $animals = array();
+            foreach ($rows as $row) {
+                $owner_id = $row['userID'];
+                $owner = $db->query("SELECT * from user WHERE userID=$owner_id");
+                $owner_details = $owner->fetch();
+                $row['owner_email'] = $owner_details['email'];
+                $row['owner_is_staff'] = $owner_details['staff'];
+                $animals[] = $row;
+            }
+            return $animals;
         } catch (PDOEXception $e) {
             $_SESSION['error_message'] = "There was an error retrieving the animals. Please refresh the page.<br>";
             return false;
         }
     }
 
-    public static function list_all_available() {
+    public static function list_all_pending() {
         require_once(__DIR__.'/../db_connection.php');
+        try {
+            $rows = $db->query("SELECT * from adoptionRequest");
+            $requests = array();
+            foreach($rows as $row) {
+                $animal_id = $row['animalID'];
+                $animal = $db->query("SELECT * from animal WHERE animalID=$animal_id");
+                $animal_details = $animal->fetch();
+                $user_id = $animal_details['userID'];
+                $user = $db->query("SELECT * from user WHERE userID=$user_id");
+                $user_details = $user->fetch();
+                if ($user_details['staff'] == 1) {
+                    $row['animal_name'] = $animal_details['name'];
+                    $requests[] = $row;
+                }
+            }
+            return $requests;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function list_all_available() {
+        require(__DIR__.'/../db_connection.php');
         try {
             $rows = $db->query("SELECT * from animal WHERE available=true");
             return $rows;

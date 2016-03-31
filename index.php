@@ -16,7 +16,7 @@ if(!isset($_SESSION['logged_in'])) {
     <body>
         <?php
         include('views/layouts/header.php');
-        if ($_SESSION['staff'] == 1) {
+        if ($_SESSION['staff'] == true) {
             echo "<h1>Pending adoption requests</h1>";
             include('views/adoption_requests/list_pending_requests.php');
             echo "<h1>Animals available for adoption<h1>";
