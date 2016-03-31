@@ -27,5 +27,6 @@ session_start();
             unset($_SESSION['error_message']);
         }
         ?>
+        <a href="user_registration.php">Register</a>
     </body>
 </html>

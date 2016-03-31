@@ -3,8 +3,8 @@ session_start();
 
 if(!isset($_SESSION['logged_in'])) {
     session_destroy();
-    header('Location: views/sessions/user_login.php');
-}
+    header('Location: /animal_sanctuary/views/sessions/user_login.php');
+} else {
 ?>
 
 <html>
@@ -34,3 +34,4 @@ if(!isset($_SESSION['logged_in'])) {
         ?>
     </body>
 <html>
+<?php } ?>

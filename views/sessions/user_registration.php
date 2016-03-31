@@ -27,5 +27,6 @@ session_start();
             unset($_SESSION['error_message']);
         }
         ?>
+        <a href="user_login.php">Log in</a>
     </body>
 </html>

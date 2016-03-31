@@ -11,7 +11,12 @@ include('../layouts/header.php');
 require_once(__DIR__.'/../../controllers/animal_controller.php');
 $animal_controller = new AnimalController();
 $animal_list = $animal_controller->index();
-
+if(!isset($_SESSION['id'])) {
+    header('Location: ../sessions/user_login.php');
+} else {
+    if ($_SESSION['staff'] == false) {
+        echo "<strong>Non-staff users can't view this page</strong>";
+    } else {
 ?>
 <table>
     <tr>
@@ -44,6 +49,8 @@ if (!empty($animal_list)) {
 if (!empty($_SESSION['error_message'])) {
     echo $_SESSION['error_message'];
     unset($_SESSION['error_message']);
+}
+}
 }
 ?>
 </body>
