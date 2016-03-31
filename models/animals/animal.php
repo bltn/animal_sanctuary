@@ -32,7 +32,7 @@ class Animal {
     public static function search_for_animals($value) {
         require(__DIR__.'/../db_connection.php');
         try {
-            $rows = $db->query("SELECT * FROM animal WHERE name LIKE '%$value%' AND available=true");
+            $rows = $db->query("SELECT * FROM animal WHERE name LIKE '%$value%'");
             return $rows;
         } catch (PDOEXception $e) {
             $_SESSION['error_message'] = $e->getMessage();

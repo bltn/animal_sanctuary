@@ -17,6 +17,10 @@ if(!isset($_SESSION['logged_in'])) {
         <?php
         include('views/layouts/header.php');
         if ($_SESSION['staff'] == true) {
+            echo "<form action=\"/animal_sanctuary/views/animals/search_animals.php\" method=\"post\">";
+            echo "<input type=\"search\" name=\"animalsearch\" class=\"search\" placeholder=\"Search animals by name or age\">";
+            echo "<input type=\"submit\" name=\"search\" value=\"Search\">";
+            echo "</form>";
             echo "<h1>Pending adoption requests</h1>";
             include('views/adoption_requests/list_pending_requests.php');
             echo "<h1>Animals available for adoption<h1>";
