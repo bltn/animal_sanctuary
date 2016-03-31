@@ -86,6 +86,26 @@ class AdoptionRequest {
             return false;
         }
     }
+    // approved, animal ID, animal name 
+    public static function list_closed($user_id) {
+        require(__DIR__.'/../db_connection.php');
+        try {
+            $sanitised_user_id = $db->quote($user_id);
+            $rows = $db->query("SELECT * from adoptionRequest WHERE closed=true AND userID=$sanitised_user_id");
+            $requests = array();
+            foreach($rows as $row) {
+                $animal_id = $row['animalID'];
+                $animal = $db->query("SELECT * from animal WHERE animalID=$animal_id");
+                $animal_details = $animal->fetch();
+                $row['animal_name'] = $animal_details['name'];
+                $requests[] = $row;
+            }
+            return $requests;
+        } catch (PDOEXception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            return false;
+        }
+    }
 
     public static function list_all_pending() {
         require_once(__DIR__.'/../db_connection.php');

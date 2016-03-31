@@ -60,6 +60,14 @@
             }
         }
 
+        public function closed_user_index($user_id) {
+            require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
+            $requests = AdoptionRequest::list_closed($user_id);
+            if ($requests) {
+                return $requests;
+            }
+        }
+
         public function pending_index() {
             require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
             $requests = AdoptionRequest::list_all_pending();
