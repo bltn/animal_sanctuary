@@ -22,6 +22,10 @@ if(!isset($_SESSION['logged_in'])) {
             echo "<h1>Animals available for adoption<h1>";
             include('views/animals/list_available_animals.php');
         } else {
+            echo "<form action=\"/animal_sanctuary/views/animals/search_animals.php\" method=\"post\">";
+            echo "<input type=\"search\" name=\"animalsearch\" class=\"search\" placeholder=\"Search animals by name or age\">";
+            echo "<input type=\"submit\" name=\"search\" value=\"Search\">";
+            echo "</form>";
             echo "<h1>Your animals</h1>";
             include('views/animals/list_user_animals.php');
             echo "<h1>Your pending adoptions</h1>";

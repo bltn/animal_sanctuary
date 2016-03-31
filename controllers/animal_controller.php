@@ -23,6 +23,14 @@ class AnimalController {
         }
     }
 
+    public function search_for_animals($value) {
+        require_once(__DIR__.'/../models/animals/animal.php');
+        $animals = Animal::search_for_animals($value);
+        if ($animals) {
+            return $animals;
+        }
+    }
+
     public function show($id) {
         require_once(__DIR__.'/../models/animals/animal.php');
         $animal = Animal::find($id);

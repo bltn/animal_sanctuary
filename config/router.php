@@ -62,5 +62,5 @@ if (isset($_POST['new_animal'])) {
         $controller = new AdoptionRequestController();
         $controller->approve_adoption_request($_GET['request_id']);
     }
-}
+} 
 ?>
