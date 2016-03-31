@@ -11,6 +11,7 @@
                 $saved = $request->save();
                 if ($saved) {
                     header('Location: ../views/animals/show_animal.php?id=' . $animal_id);
+                     $_SESSION['error_message'] = "Your request has been submitted.";
                 } else {
                     $_SESSION['error_message'] = "There was an error processing your adoption request. Please try again.";
                     header('Location: ../views/animals/show_animal.php?id=' . $animal_id);
