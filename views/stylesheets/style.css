@@ -1,0 +1,11 @@
+ul.navbar {
+    position: absolute;
+    right: 0px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.navbar li {
+    display: inline;
+    padding: 0px 10px 0px 10px;
+}
