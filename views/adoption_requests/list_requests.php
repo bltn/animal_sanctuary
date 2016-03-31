@@ -8,15 +8,19 @@ $request_controller = new AdoptionRequestController();
     </head>
     <body>
         <?php
-        if ($_SESSION['staff'] == false) {
-            echo "You need to be a staff user.";
+        if (isset($_SESSION['id'])) {
+            if ($_SESSION['staff'] == false) {
+                echo "You need to be a staff user.";
+            } else {
+                $request_list = $request_controller->index();
+            }
         } else {
-            $request_list = $request_controller->index();
+            header('Location: ../sessions/user_login.php');
         }
         ?>
         <table>
             <tr>
-                <th>Adoption ID</th>
+                <th>Animal name</th>
                 <th>Status</th>
                 <th colspan="2">Approve or deny?</th>
                 <th>Animal link</th>
@@ -25,7 +29,7 @@ $request_controller = new AdoptionRequestController();
             if (!empty($request_list)) {
                 foreach($request_list as $request) {
                     echo "<tr>";
-                    echo "<td>" . $request['adoptionID'] . "</td>";
+                    echo "<td> <a href='../animals/show_animal.php?id=" . $request['animalID'] . "'>" . $request['animal_name'] . "</a></td>";
                     if ($request['approved'] == 0) {
                         echo "<td>Pending</td>";
                     } else {

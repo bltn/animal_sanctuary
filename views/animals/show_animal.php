@@ -36,7 +36,7 @@ $animal_controller = new AnimalController();
             echo "<a href=\"../../config/router.php?request_adoption&animal_id=" . $_GET['id'] . "\">Request adoption</a><br>";
         }
         ?>
-        <a href='list_animals.php'>Back</a>
+        <a href='list_animals.php'>View all animals</a>
         <?php
         if (!empty($_SESSION['error_message'])) {
             echo $_SESSION['error_message'];

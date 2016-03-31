@@ -28,7 +28,15 @@ class AdoptionRequest {
         require_once(__DIR__.'/../db_connection.php');
         try {
             $rows = $db->query("SELECT * from adoptionRequest");
-            return $rows;
+            $requests = array();
+            foreach($rows as $row) {
+                $id = $row['animalID'];
+                $animal = $db->query("SELECT * from animal WHERE animalID=$id");
+                $animal_details = $animal->fetch();
+                $row['animal_name'] = $animal_details['name'];
+                $requests[] = $row;
+            }
+            return $requests;
         } catch (PDOEXception $e) {
             $_SESSION['error_message'] = $e->getMessage();
             return false;
