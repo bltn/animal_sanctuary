@@ -21,9 +21,9 @@
             }
         }
 
-        public function index() {
+        public function pending_index() {
             require_once(__DIR__.'/../models/adoption_requests/adoption_request.php');
-            $requests = AdoptionRequest::list_all();
+            $requests = AdoptionRequest::list_all_pending();
             if ($requests) {
                 return $requests;
             }

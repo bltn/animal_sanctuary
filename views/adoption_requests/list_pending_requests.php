@@ -12,7 +12,7 @@ $request_controller = new AdoptionRequestController();
             if ($_SESSION['staff'] == false) {
                 echo "You need to be a staff user.";
             } else {
-                $request_list = $request_controller->index();
+                $request_list = $request_controller->pending_index();
             }
         } else {
             header('Location: ../sessions/user_login.php');

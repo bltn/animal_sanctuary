@@ -24,17 +24,22 @@ class AdoptionRequest {
         return $saved;
     }
 
-    public static function list_all() {
+    public static function list_all_pending() {
         require_once(__DIR__.'/../db_connection.php');
         try {
             $rows = $db->query("SELECT * from adoptionRequest");
             $requests = array();
             foreach($rows as $row) {
-                $id = $row['animalID'];
-                $animal = $db->query("SELECT * from animal WHERE animalID=$id");
+                $animal_id = $row['animalID'];
+                $animal = $db->query("SELECT * from animal WHERE animalID=$animal_id");
                 $animal_details = $animal->fetch();
-                $row['animal_name'] = $animal_details['name'];
-                $requests[] = $row;
+                $user_id = $animal_details['userID'];
+                $user = $db->query("SELECT * from user WHERE userID=$user_id");
+                $user_details = $user->fetch();
+                if ($user_details['staff'] == 1) {
+                    $row['animal_name'] = $animal_details['name'];
+                    $requests[] = $row;
+                }
             }
             return $requests;
         } catch (PDOEXception $e) {
